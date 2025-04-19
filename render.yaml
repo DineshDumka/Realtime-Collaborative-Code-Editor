@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: codetogether
+    env: docker
+    region: ohio # Choose a region close to your users
+    plan: free # Or choose a paid plan for better performance
+    branch: main
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: CLIENT_URL
+        fromService:
+          name: codetogether
+          type: web
+          property: url
+      - key: MONGODB_URI
+        sync: false # This will prompt you to enter the value during deployment
+      - key: SKIP_DB_CONNECTION
+        value: "false" # Set to "true" if you want to skip MongoDB connection
+      - key: REACT_APP_FIREBASE_API_KEY
+        sync: false
+      - key: REACT_APP_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: REACT_APP_FIREBASE_PROJECT_ID
+        sync: false
+      - key: REACT_APP_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: REACT_APP_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: REACT_APP_FIREBASE_APP_ID
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false 

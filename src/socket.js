@@ -5,7 +5,7 @@ export const initSocket = async () => {
         'force new connection': true,
         reconnectionAttempts: Infinity,
         timeout: 10000,
-        transports: ['websocket'],
+        transports: ['websocket', 'polling'],
         autoConnect: true,
         reconnection: true,
         reconnectionDelay: 1000,
@@ -13,12 +13,13 @@ export const initSocket = async () => {
         reconnectionAttempt: 0
     };
     
-    // Use environment variable if available, otherwise use localhost
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+    // Use environment variable if available, otherwise use relative path
+    // This works better for deployment where frontend and backend are on the same domain
+    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || window.location.origin;
     console.log('Connecting to socket server at:', BACKEND_URL);
     
-    // Try connecting to the primary port
-    let socket = io(BACKEND_URL, options);
+    // Connect to the server
+    const socket = io(BACKEND_URL, options);
     
     // Handle connection errors
     return new Promise((resolve, reject) => {
@@ -30,25 +31,9 @@ export const initSocket = async () => {
         socket.on('connect_error', (err) => {
             console.error('Socket connection error:', err.message);
             
-            // Close the current connection attempt
-            socket.close();
-            
-            // If we can't connect to port 5000, try port 5001 instead
-            const altUrl = 'http://localhost:5001';
-            console.log('Trying alternative server at:', altUrl);
-            
-            // Create a new socket connection to the alternative port
-            socket = io(altUrl, options);
-            
-            socket.on('connect', () => {
-                console.log('Socket connected successfully to alternative port!');
-                resolve(socket);
-            });
-            
-            socket.on('connect_error', (secondErr) => {
-                console.error('Alternative socket connection also failed:', secondErr.message);
-                reject(new Error('Failed to connect to both primary and fallback servers'));
-            });
+            // In production, we don't want to try alternative ports
+            // Just report the error and let the reconnection logic handle it
+            console.log('Connection error. Reconnection will be attempted automatically.');
         });
         
         // Add a 10-second timeout

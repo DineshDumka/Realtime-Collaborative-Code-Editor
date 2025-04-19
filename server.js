@@ -22,18 +22,32 @@ if (process.env.SKIP_DB_CONNECTION !== 'true') {
 }
 
 const server = http.createServer(app);
+
+// Determine CORS settings based on environment
+const corsOrigin = process.env.NODE_ENV === 'production'
+    ? [process.env.CLIENT_URL || '*'] // In production, use configured client URL or allow all
+    : ['http://localhost:3000', 'http://localhost:3001']; // In development, allow local ports
+
+console.log('CORS origins:', corsOrigin);
+
+// Configure Socket.IO with proper CORS settings
 const io = new Server(server, {
     cors: {
-        origin: process.env.CLIENT_URL || 'http://localhost:3000',
-        methods: ['GET', 'POST']
-    }
+        origin: corsOrigin,
+        methods: ['GET', 'POST'],
+        credentials: true
+    },
+    transports: ['websocket', 'polling'] // Support both WebSocket and long-polling
 });
 
 // Enable JSON parsing
 app.use(express.json());
 
-// Enable CORS
-app.use(cors());
+// Enable CORS for REST API
+app.use(cors({
+    origin: corsOrigin,
+    credentials: true
+}));
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -57,7 +71,7 @@ if (process.env.SKIP_DB_CONNECTION !== 'true') {
         console.log('Continuing without MongoDB connection');
     }
 } else {
-    console.log('Skipping MongoDB connection for testing');
+    console.log('Skipping MongoDB connection as SKIP_DB_CONNECTION is set to true');
 }
 
 // SPA fallback
