@@ -1,0 +1,67 @@
+{
+    "name": "collab-code-editor",
+    "version": "0.1.0",
+    "private": true,
+    "author": "Dinesh Dumka",
+    "dependencies": {
+        "@monaco-editor/react": "^4.7.0",
+        "@testing-library/jest-dom": "^5.16.4",
+        "@testing-library/react": "^14.2.1",
+        "@testing-library/user-event": "^13.5.0",
+        "axios": "^1.8.4",
+        "codemirror": "^5.65.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.5.0",
+        "express": "^4.17.3",
+        "firebase": "^10.8.0",
+        "firebase-admin": "^12.7.0",
+        "mongoose": "^8.13.2",
+        "pm2": "^5.3.1",
+        "react": "^18.0.0",
+        "react-avatar": "^4.0.0",
+        "react-dom": "^18.0.0",
+        "react-hot-toast": "^2.2.0",
+        "react-icons": "^5.5.0",
+        "react-router-dom": "^6.3.0",
+        "react-scripts": "5.0.0",
+        "recoil": "^0.7.0",
+        "socket.io": "^4.4.1",
+        "socket.io-client": "^4.4.1",
+        "uuid": "^8.3.2",
+        "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+        "start:docker": "pm2 start server.js && npm start",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "build:digitalocean": "npm install --force && react-scripts build",
+        "server:dev": "nodemon server.js",
+        "server": "node server.js",
+        "kill-server": "npx kill-port 5000",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "production": "npm run build && npm run server"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "kill-port": "^2.0.1",
+        "nodemon": "^2.0.15"
+    }
+}

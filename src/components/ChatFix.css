@@ -1,0 +1,135 @@
+/* Specific fixes for chat input visibility */
+.discussion-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    max-height: 450px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.discussion-section .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    max-height: 320px;
+}
+
+.discussion-chat-input {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: rgba(var(--primary-rgb), 0.05);
+    border: 1px solid rgba(var(--primary-rgb), 0.15);
+    min-height: 54px;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;
+    visibility: visible;
+    opacity: 1;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.discussion-chat-input input {
+    flex: 1;
+    height: 38px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: var(--darker-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-size: 13px;
+    transition: all 0.2s ease;
+    min-width: 0;
+}
+
+.discussion-chat-input button {
+    height: 38px;
+    min-width: 75px;
+    padding: 0 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Material icons fix */
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 20px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Button styling improvements */
+.copyBtn, .end-meeting-btn, .leave-meeting-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    padding: 8px 16px;
+    height: 38px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    gap: 8px;
+}
+
+.copyBtn .material-icons, 
+.end-meeting-btn .material-icons, 
+.leave-meeting-btn .material-icons {
+    margin-right: 4px;
+    font-size: 18px;
+}
+
+/* Theme-aware input styling for all input and textarea elements */
+/* Dark theme (default) */
+input, textarea, .stdin-textarea, .chat-input {
+    background-color: #252526 !important;
+    color: #d4d4d4 !important;
+    border: 1px solid #474747 !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Light theme */
+[data-theme="light"] input, 
+[data-theme="light"] textarea, 
+[data-theme="light"] .stdin-textarea, 
+[data-theme="light"] .chat-input {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    border-color: #c8c8c8 !important;
+}
+
+/* Focus states for both themes */
+input:focus, textarea:focus, .stdin-textarea:focus, .chat-input:focus {
+    outline: none !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 1px var(--primary-color), 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+} 
