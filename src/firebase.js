@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-console.log("Initializing Firebase with project:", firebaseConfig.projectId);
+console.log("Initializing Firebase with project:", firebaseConfig.projectId || "Environment variables not loaded");
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export default app; 
