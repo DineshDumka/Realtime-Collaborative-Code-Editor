@@ -6,6 +6,7 @@ services:
     plan: free # Or choose a paid plan for better performance
     branch: main
     healthCheckPath: /
+    dockerfilePath: Dockerfile.backend
     envVars:
       - key: NODE_ENV
         value: production
@@ -42,9 +43,22 @@ services:
     plan: free
     branch: main
     healthCheckPath: /
+    dockerfilePath: Dockerfile.frontend
     envVars:
       - key: REACT_APP_BACKEND_URL
         fromService:
           name: codetogether-backend
           type: web
-          property: url 
+          property: url
+      - key: REACT_APP_FIREBASE_API_KEY
+        value: AIzaSyDJq7IXAOZEaITJVQrOXH6hOk9vAHCYdwo
+      - key: REACT_APP_FIREBASE_AUTH_DOMAIN
+        value: codetogether-bf7e1.firebaseapp.com
+      - key: REACT_APP_FIREBASE_PROJECT_ID
+        value: codetogether-bf7e1
+      - key: REACT_APP_FIREBASE_STORAGE_BUCKET
+        value: codetogether-bf7e1.appspot.com
+      - key: REACT_APP_FIREBASE_MESSAGING_SENDER_ID
+        value: 621583802793
+      - key: REACT_APP_FIREBASE_APP_ID
+        value: 1:621583802793:web:43de1b427150ee02f024b8 
