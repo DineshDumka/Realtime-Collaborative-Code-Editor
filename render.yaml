@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: codetogether
+    name: codetogether-backend
     env: docker
     region: ohio # Choose a region close to your users
     plan: free # Or choose a paid plan for better performance
@@ -13,7 +13,7 @@ services:
         value: 5000
       - key: CLIENT_URL
         fromService:
-          name: codetogether
+          name: codetogether-frontend
           type: web
           property: url
       - key: MONGODB_URI
@@ -33,4 +33,18 @@ services:
       - key: REACT_APP_FIREBASE_APP_ID
         sync: false
       - key: FIREBASE_SERVICE_ACCOUNT
-        sync: false 
+        sync: false
+
+  - type: web
+    name: codetogether-frontend
+    env: docker
+    region: ohio
+    plan: free
+    branch: main
+    healthCheckPath: /
+    envVars:
+      - key: REACT_APP_BACKEND_URL
+        fromService:
+          name: codetogether-backend
+          type: web
+          property: url 
