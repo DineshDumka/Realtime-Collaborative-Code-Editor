@@ -12,8 +12,9 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
-// Log the configuration (without sensitive data)
-console.log("Firebase Config:", {
+// Debug logging (without sensitive data)
+console.log("Firebase Config Status:", {
+  hasApiKey: !!firebaseConfig.apiKey,
   authDomain: firebaseConfig.authDomain,
   projectId: firebaseConfig.projectId,
   storageBucket: firebaseConfig.storageBucket,
@@ -26,15 +27,16 @@ const requiredFields = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'm
 const missingFields = requiredFields.filter(field => !firebaseConfig[field]);
 
 if (missingFields.length > 0) {
-  console.error("Missing required Firebase configuration fields:", missingFields);
-  throw new Error(`Missing required Firebase configuration fields: ${missingFields.join(', ')}`);
+  const errorMessage = `Missing required Firebase configuration fields: ${missingFields.join(', ')}`;
+  console.error(errorMessage);
+  throw new Error(errorMessage);
 }
 
 // Initialize Firebase
 let app;
 try {
   app = initializeApp(firebaseConfig);
-  console.log("Firebase initialized successfully");
+  console.log("Firebase initialized successfully with project:", firebaseConfig.projectId);
 } catch (error) {
   console.error("Error initializing Firebase:", error);
   throw error;
